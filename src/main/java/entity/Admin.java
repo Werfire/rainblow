@@ -1,12 +1,13 @@
 package entity;
 
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class User {
+public class Admin {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -14,10 +15,9 @@ public class User {
             strategy = "org.hibernate.id.UUIDGenerator"
     )
     private UUID id;
-    private String login;
-    private String password;
+    private String name;
 
-    public User() { }
+    public Admin() { }
 
     public UUID getId() {
         return id;
@@ -27,19 +27,11 @@ public class User {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getName() {
+        return name;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setName(String name) {
+        this.name = name;
     }
 }
