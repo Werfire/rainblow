@@ -2,8 +2,10 @@ package util;
 
 import entity.*;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
-import java.util.List;
+import javax.persistence.Query;
+import java.util.*;
 
 public class DatabaseUtil {
     public static List<User> getUsers() {
@@ -15,6 +17,14 @@ public class DatabaseUtil {
     public static List<Client> getClients() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from Client", Client.class).list();
+        }
+    }
+
+    public static void deleteClient(UUID id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+                Transaction transaction = session.beginTransaction();
+                session.delete(session.get(Client.class, id));
+                transaction.commit();
         }
     }
 
@@ -50,6 +60,18 @@ public class DatabaseUtil {
     public static List<PlayingSite> getPlayingSites() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from PlayingSite", PlayingSite.class).list();
+        }
+    }
+
+    public static Set<Order> getOrdersFromClients() {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            List<Client> clients = session.createQuery("from Client", Client.class).list();
+            Set<Order> allOrders = new HashSet<>(Collections.emptySet());
+            clients.forEach(client -> {
+                Set<Order> orders = client.getOrders();
+                allOrders.addAll(orders);
+            });
+            return allOrders;
         }
     }
 }

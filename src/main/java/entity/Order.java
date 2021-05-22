@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -19,8 +20,13 @@ public class Order {
     private String deliveryAddress;
     @Column(columnDefinition = "set")
     private String status;
-    @Column(name = "client_id")
-    private UUID clientId;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+    //@Column(name = "client_id")
+    //private UUID clientId;
 
     public Order() { }
 
@@ -48,11 +54,11 @@ public class Order {
         this.status = String.join(",", status);
     }
 
-    public UUID getClientId() {
-        return clientId;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClientId(UUID clientId) {
-        this.clientId = clientId;
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

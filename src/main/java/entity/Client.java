@@ -1,8 +1,12 @@
 package entity;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -19,6 +23,10 @@ public class Client {
     @Column(name = "phone_number")
     private String phoneNumber;
     private String address;
+
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, targetEntity = Order.class, orphanRemoval = true)
+    @Cascade(value = {CascadeType.DELETE})
+    Set<Order> orders = new HashSet<>();
 
     public Client() { }
 
@@ -60,5 +68,13 @@ public class Client {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 }
