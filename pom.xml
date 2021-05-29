@@ -5,12 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.werfire</groupId>
-    <artifactId>RainBlow</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>rain-blow</artifactId>
+    <version>1.0</version>
+    <packaging>war</packaging>
 
     <properties>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
     </properties>
 
     <build>
