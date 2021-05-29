@@ -1,11 +1,42 @@
 body {
     font: 24px Helvetica, sans-serif;
+    background-color: wheat;
+}
+
+h1 {
+    font-size: 68px;
+    padding-top: 12px;
+    padding-bottom: 24px;
 }
 
 p {
-    font-size: 16px;
+    font-size: 18px;
 }
 
 a {
-    font-size: 16px;
+    font-size: 18px;
+}
+
+.topnav {
+    background-color: #ffc9b1;
+    overflow: hidden;
+}
+
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav a:hover {
+    background-color: #ffac61;
+    color: black;
+}
+
+.topnav a.active {
+    background-color: #ff7217;
+    color: white;
 }
