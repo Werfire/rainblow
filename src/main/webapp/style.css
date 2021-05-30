@@ -71,12 +71,32 @@ a {
 }
 
 .equipment-block {
-    margin-left: 15%;
-    margin-right: 15%;
+    width: 75%;
+    margin: auto;
 }
 
-.login-area,
-.register-area {
+.equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 60px;
+    grid-row-gap: 100px;
+}
+
+.equipment-element {
+    background-color: #ffc9b1;
+    border-style: solid;
+    border-color: brown;
+    border-width: 3px;
+}
+
+.equipment-element span {
+    line-height: 2em;
+    margin-left: 2em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.centered {
     position: absolute;
     top: 40%;
     left: 50%;
