@@ -4,7 +4,7 @@ body {
 }
 
 h1 {
-    font-size: 68px;
+    font-size: 54px;
 }
 
 p {
@@ -20,23 +20,27 @@ a {
     position: relative;
 }
 
-.caption {
+.main-caption {
+    font-size: 68px;
+    font-weight: bold;
     margin-bottom: 12px;
     margin-top: 24px;
     text-align: center;
+    display: block;
 }
 
-.login-register {
+.top-right {
     position: absolute;
     top: 12px;
-    right: 40px;
+    right: 30px;
 }
 
-.login-register a {
+.cart {
+    margin-right: 30px;
     float: left;
 }
 
-.login-register p {
+.login-register {
     float: left;
 }
 
@@ -57,12 +61,26 @@ a {
 }
 
 .topnav a:hover {
-    background-color: #ffac61;
+    background-color: #ffbf95;
     color: #363636;
 }
 
 .topnav a.active {
     background-color: #ff9500;
     color: white;
+}
+
+.equipment-block {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.login-area,
+.register-area {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
