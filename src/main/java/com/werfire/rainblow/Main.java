@@ -1,5 +1,7 @@
-import entity.*;
-import util.DatabaseUtil;
+package com.werfire.rainblow;
+
+import com.werfire.rainblow.models.*;
+import com.werfire.rainblow.util.DatabaseUtil;
 
 import java.util.List;
 import java.util.Set;

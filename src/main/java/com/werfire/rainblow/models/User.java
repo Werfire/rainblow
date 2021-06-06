@@ -1,9 +1,8 @@
-package entity;
+package com.werfire.rainblow.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Set;
 import java.util.UUID;
 
 @Entity

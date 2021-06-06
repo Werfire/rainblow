@@ -1,13 +1,13 @@
-package entity;
-
+package com.werfire.rainblow.models;
 
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.UUID;
 
+@Table(name = "playing_site")
 @Entity
-public class Admin {
+public class PlayingSite {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -16,8 +16,10 @@ public class Admin {
     )
     private UUID id;
     private String name;
+    private String address;
+    private int price;
 
-    public Admin() { }
+    public PlayingSite() { }
 
     public UUID getId() {
         return id;
@@ -33,5 +35,21 @@ public class Admin {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

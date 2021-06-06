@@ -15,8 +15,8 @@
         <servlet-name>jersey-servlet</servlet-name>
         <url-pattern>api/*</url-pattern>
     </servlet-mapping>
-    
+
     <error-page>
-        <location>/error.html</location>
+        <location>/errors</location>
     </error-page>
 </web-app>

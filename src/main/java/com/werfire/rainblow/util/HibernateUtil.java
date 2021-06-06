@@ -1,6 +1,6 @@
-package util;
+package com.werfire.rainblow.util;
 
-import entity.*;
+import com.werfire.rainblow.models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;

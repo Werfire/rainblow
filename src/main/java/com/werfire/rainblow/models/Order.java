@@ -1,5 +1,4 @@
-package entity;
-
+package com.werfire.rainblow.models;
 
 import org.hibernate.annotations.GenericGenerator;
 

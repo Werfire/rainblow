@@ -1,4 +1,4 @@
-package entity;
+package com.werfire.rainblow.models;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;

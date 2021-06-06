@@ -1,10 +1,9 @@
-package util;
+package com.werfire.rainblow.util;
 
-import entity.*;
+import com.werfire.rainblow.models.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import javax.persistence.Query;
 import java.util.*;
 
 public class DatabaseUtil {
