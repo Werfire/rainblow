@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
     <%@include file='/WEB-INF/styles/style.css' %>
 </style>
@@ -42,7 +44,21 @@
         <option value="balls">Пейнтбольный шарики</option>
     </select>
     <div class="equipment-grid" style="margin-top: 60px">
-        <div class="equipment-element">
+        <c:forEach items="${equipments}" var="equipment">
+            <%--<form:form method="POST" action="addToCart">--%>
+            <div class="equipment-element">
+                <span>
+                    ${equipment.name}<br>
+                    ${equipment.price}₽<br>
+                    Количество:
+                </span>
+                <input type="number" name="quantity" value="1" min="1" max="${equipment.quantity}">
+                <input type="button" value="В корзину" style="margin: 0.5em auto;
+                display: block; background-color: palegreen">
+            </div>
+            <%--</form:form>--%>
+        </c:forEach>
+        <!--<div class="equipment-element">
             <span>
                 Название товара<br>
                 Стоимость<br>
@@ -81,17 +97,7 @@
             <input type="number" name="quantity" value="1" min="1" max="5">
             <input type="button" value="В корзину" style="margin: 0.5em auto;
             display: block; background-color: palegreen">
-        </div>
-        <div class="equipment-element">
-            <span>
-                Название товара<br>
-                Стоимость<br>
-                Количество:
-            </span>
-            <input type="number" name="quantity" value="1" min="1" max="5">
-            <input type="button" value="В корзину" style="margin: 0.5em auto;
-            display: block; background-color: palegreen">
-        </div>
+        </div>-->
     </div>
 </div>
 </body>

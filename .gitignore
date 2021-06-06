@@ -1,5 +1,4 @@
 .idea
-.lib
 *.iml
 # Default ignored files
 /shelf/
@@ -9,3 +8,5 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+/lib/
+/target/
