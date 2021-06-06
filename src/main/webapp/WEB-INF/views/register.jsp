@@ -14,7 +14,7 @@
     ><span style="color: #59c169">Blow</span>
 </a>
 <form>
-    <div class="centered">
+    <div class="centered" style="top: 50%">
         <h1 style="text-align: center; margin-bottom: 12px">Регистрация</h1>
         <label for="login" style="display: block; margin-bottom: 6px">Логин (от 3 до 32 символов)</label>
         <input type="text" id="login" name="login" required minlength="3"

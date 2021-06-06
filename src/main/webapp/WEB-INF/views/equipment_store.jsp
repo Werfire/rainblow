@@ -46,7 +46,7 @@
     </select>
     <c:choose>
         <c:when test="${fn:length(equipments)==0}">
-            <h1 style="text-align: center; margin-top: 4em">Товары отсутствуют</h1>
+            <h1 style="text-align: center; margin-top: 3em">Товары отсутствуют</h1>
         </c:when>
         <c:otherwise>
             <div class="equipment-grid" style="margin-top: 60px">
