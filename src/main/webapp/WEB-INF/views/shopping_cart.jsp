@@ -9,6 +9,9 @@
     <link rel="shortcut icon" href="../../resources/rainblow-icon.ico"/>
 </head>
 <body>
-
+<a class="main-caption" href="equipment_store">
+    <span style="color: #4c95ff">Rain</span
+    ><span style="color: #59c169">Blow</span>
+</a>
 </body>
 </html>

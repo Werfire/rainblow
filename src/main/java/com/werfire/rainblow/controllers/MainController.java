@@ -17,7 +17,7 @@ public class MainController {
     private final Logger logger = LoggerFactory.getLogger(MainController.class);
     private Order cart = null;
 
-    @RequestMapping({"/", "/index"})
+    @RequestMapping({"/", "/index", "equipment_store"})
     public String index(Model model) {
         logger.debug("Welcome to RainBlow!");
         List<Equipment> equipmentList = DatabaseUtil.getEquipments();
@@ -26,7 +26,7 @@ public class MainController {
         }
 
         model.addAttribute("equipments", DatabaseUtil.getEquipments());
-        return "index";
+        return "equipment_store";
     }
 
     @RequestMapping({"/login"})

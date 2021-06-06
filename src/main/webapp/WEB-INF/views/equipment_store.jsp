@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class="header-container">
-    <a class="main-caption" href="index">
+    <a class="main-caption" href="equipment_store">
     <span style="color: #4c95ff">Rain</span
     ><span style="color: #59c169">Blow</span>
     </a>
@@ -31,7 +31,7 @@
     </div>
 </div>
 <div class="topnav">
-    <a class="active" href="index">Магазин экипировки</a>
+    <a class="active" href="equipment_store">Магазин экипировки</a>
     <a href="site_reservation">Аренда площадок</a>
 </div>
 <div class="equipment-block" style="margin-top: 30px">
