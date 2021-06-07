@@ -52,18 +52,19 @@
             <div class="equipment-grid" style="margin-top: 60px">
 
                     <c:forEach items="${equipments}" var="equipment">
-                        <%--<form:form method="POST" action="addToCart">--%>
+                        <form:form method="POST" action="equipment_store">--%>
                         <div class="equipment-element">
                             <span>
                                 ${equipment.name}<br>
                                 ${equipment.price}₽<br>
                                 Количество:
                             </span>
-                            <input type="number" name="quantity" value="1" min="1" max="${equipment.quantity}">
-                            <input type="button" value="В корзину" style="margin: 0.5em auto;
-                            display: block; background-color: palegreen">
+                            <input type="number" id="quantity" name="quantity" value="1" min="1" max="${equipment.quantity}">
+                            <input type="hidden" id="equipment" name="equipment" value="$(equipment)">
+                            <button type="submit" name="addToCart" style="margin: 0.5em auto;
+                            display: block; background-color: palegreen">В корзину</button>
                         </div>
-                        <%--</form:form>--%>
+                        </form:form>
                     </c:forEach>
             </div>
         </c:otherwise>

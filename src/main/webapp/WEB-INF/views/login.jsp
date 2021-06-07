@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <style>
     <%@include file='/WEB-INF/styles/style.css' %>
 </style>
@@ -13,7 +14,7 @@
     <span style="color: #4c95ff">Rain</span
     ><span style="color: #59c169">Blow</span>
 </a>
-<form>
+<form:form method="POST" action="login">
     <div class="centered">
         <h1 style="text-align: center; margin-bottom: 12px">Вход</h1>
         <label for="login" style="display: block; margin-bottom: 6px">Логин</label>
@@ -22,7 +23,7 @@
         <label for="password" style="display: block; margin-bottom: 6px">Пароль</label>
         <input type="password" id="password" name="password" required minlength="6"
                maxlength="32" size="32" style="display: block; margin-bottom: 20px">
-        <button type="submit" style="display: block; margin: auto">Войти</button>
+        <button type="submit" name="tryLogin" style="display: block; margin: auto">Войти</button>
     </div>
-</form>
+</form:form>
 </body>

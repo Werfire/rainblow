@@ -24,8 +24,8 @@ public class Order {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    //@Column(name = "client_id")
-    //private UUID clientId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order_id")
+    private Set<Item> items;
 
     public Order() { }
 
@@ -60,4 +60,8 @@ public class Order {
     public void setClient(Client client) {
         this.client = client;
     }
+
+    public Set<Item> getItems() {return items;}
+
+    public void setItems(Set<Item> items) {this.items = items;}
 }

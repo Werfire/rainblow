@@ -34,7 +34,7 @@
         <label for="password" style="display: block; margin-bottom: 6px">Пароль</label>
         <input type="password" id="password" name="password" required minlength="6"
                maxlength="32" size="46" style="display: block; margin-bottom: 20px">
-        <button type="submit" style="display: block; margin: auto">Зарегистрироваться!</button>
+        <button type="submit" name="register" style="display: block; margin: auto">Зарегистрироваться!</button>
     </div>
 </form>
 </body>
