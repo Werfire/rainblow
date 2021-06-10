@@ -23,7 +23,7 @@ public class DatabaseUtil {
         }
     }
 
-    public static User findUser(String login, String password) {
+    public static User getUser(String login, String password) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             List<User> result = session.createQuery("from User where login = :login and password = :password",
                     User.class).setParameter("login", login).setParameter("password", password)
@@ -35,9 +35,20 @@ public class DatabaseUtil {
         }
     }
 
-    public static Order findCart(UUID clientId) {
+    public static Client getClient(UUID id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            List<Client> result = session.createQuery("from Client where id = :id",
+                    Client.class).setParameter("id", id).getResultList();
+            if(!result.isEmpty())
+                return result.get(0);
+            else
+                return null;
+        }
+    }
+
+    public static Order getCart(UUID clientId) {
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<Order> result = session.createQuery("from orders where client_id = UUID_TO_BIN(:cleint_id) and " +
+            List<Order> result = session.createQuery("from Order where client.id = UUID_TO_BIN(:cleint_id) and " +
                     "status = 'shopping_cart'", Order.class).setParameter("client_id", clientId).getResultList();
             if(!result.isEmpty())
                 return result.get(0);

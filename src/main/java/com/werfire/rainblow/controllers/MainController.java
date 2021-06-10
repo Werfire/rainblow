@@ -8,7 +8,6 @@ import com.werfire.rainblow.util.DatabaseUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +20,21 @@ import java.util.UUID;
 public class MainController {
     private final Logger logger = LoggerFactory.getLogger(MainController.class);
 
+    @ModelAttribute("user")
+    public User initUser() {
+        return null;
+    }
+
+    @ModelAttribute("cart")
+    public Order initShoppingCart() {
+        return null;
+    }
+
     @RequestMapping({"/", "/index", "equipment_store"})
     public String index(Model model) {
         logger.debug("Welcome to RainBlow!");
         List<Equipment> equipmentList = DatabaseUtil.getEquipments();
-        model.addAttribute("equipments", DatabaseUtil.getEquipments());
+        model.addAttribute("equipments", equipmentList);
         return "equipment_store";
     }
 
@@ -36,10 +45,13 @@ public class MainController {
 
     @RequestMapping(value="/login", method= RequestMethod.POST, params="tryLogin")
     public String tryLogin(Model model, @RequestParam String login, @RequestParam String password) {
-        User user = DatabaseUtil.findUser(login, DigestUtils.sha1Hex(password));
+        User user = DatabaseUtil.getUser(login, DigestUtils.sha1Hex(password));
         if(user == null)
             return "login";
         model.addAttribute("user", user);
+        //Order cart = DatabaseUtil.findCart(user.getId());
+        //if(cart != null)
+        //    model.addAttribute("cart", cart);
         return "redirect:equipment_store";
     }
 
@@ -48,14 +60,11 @@ public class MainController {
         return "register";
     }
 
-    @ModelAttribute("cart")
-    public Order initShoppingCart(@ModelAttribute("user") User user) {
-        return DatabaseUtil.findCart(user.getId());
-    }
-
-    @RequestMapping(value = {"/", "/index", "equipment_store"}, method = RequestMethod.POST, params="addToCart")
+    @RequestMapping(value = {"addToCart"}, method = RequestMethod.POST, params="addToCart")
     public String addToCart(Model model, @RequestParam int quantity, @RequestParam Equipment equipment,
-                            @ModelAttribute("cart") Order cart) {
+                            @ModelAttribute("user") User user, @ModelAttribute("cart") Order cart) {
+        if(user == null || DatabaseUtil.getClient(user.getId()) == null)
+            return "login";
         Item item = new Item();
         item.setId(UUID.randomUUID());
         item.setQuantity(quantity);

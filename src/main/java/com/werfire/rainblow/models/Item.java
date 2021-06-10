@@ -15,9 +15,11 @@ public class Item {
     )
     private UUID id;
     private int quantity;
+
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
     @Column(name = "equipment_id")
     private UUID equipmentId;
 

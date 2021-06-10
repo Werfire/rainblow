@@ -50,9 +50,8 @@
         </c:when>
         <c:otherwise>
             <div class="equipment-grid" style="margin-top: 60px">
-
                     <c:forEach items="${equipments}" var="equipment">
-                        <form:form method="POST" action="equipment_store">--%>
+                        <form:form method="POST" action="addToCart">
                         <div class="equipment-element">
                             <span>
                                 ${equipment.name}<br>
