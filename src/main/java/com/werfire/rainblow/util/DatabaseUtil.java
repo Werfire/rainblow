@@ -46,10 +46,10 @@ public class DatabaseUtil {
         }
     }
 
-    public static Order getCart(UUID clientId) {
+    public static Orders getCart(UUID clientId) {
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<Order> result = session.createQuery("from Order where client.id = UUID_TO_BIN(:cleint_id) and " +
-                    "status = 'shopping_cart'", Order.class).setParameter("client_id", clientId).getResultList();
+            List<Orders> result = session.createQuery("from Orders where client.id = :client_id and " +
+                    "status = 'shopping_cart'", Orders.class).setParameter("client_id", clientId).getResultList();
             if(!result.isEmpty())
                 return result.get(0);
             else
@@ -79,9 +79,9 @@ public class DatabaseUtil {
         }
     }
 
-    public static List<Order> getOrders() {
+    public static List<Orders> getOrders() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from Order", Order.class).getResultList();
+            return session.createQuery("from Orders", Orders.class).getResultList();
         }
     }
 
@@ -108,12 +108,12 @@ public class DatabaseUtil {
         }
     }
 
-    public static Set<Order> getOrdersFromClients() {
+    public static Set<Orders> getOrdersFromClients() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             List<Client> clients = session.createQuery("from Client", Client.class).getResultList();
-            Set<Order> allOrders = new HashSet<>(Collections.emptySet());
+            Set<Orders> allOrders = new HashSet<>(Collections.emptySet());
             clients.forEach(client -> {
-                Set<Order> orders = client.getOrders();
+                Set<Orders> orders = client.getOrders();
                 allOrders.addAll(orders);
             });
             return allOrders;

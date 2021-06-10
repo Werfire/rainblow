@@ -18,7 +18,7 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    private Orders order;
 
     @Column(name = "equipment_id")
     private UUID equipmentId;
@@ -41,11 +41,11 @@ public class Item {
         this.quantity = quantity;
     }
 
-    public Order getOrder() {
+    public Orders getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(Orders order) {
         this.order = order;
     }
 

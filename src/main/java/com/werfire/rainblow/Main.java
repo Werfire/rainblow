@@ -17,10 +17,10 @@ public class Main {
         List<Client> clients = DatabaseUtil.getClients();
         clients.forEach(client -> System.out.println(client.getAddress()));
 
-        Set<Order> orders = DatabaseUtil.getOrdersFromClients();
+        Set<Orders> orders = DatabaseUtil.getOrdersFromClients();
         orders.forEach(order -> System.out.println(order.getDeliveryAddress()));
 
-        List<Order> ordersList = DatabaseUtil.getOrders();
+        List<Orders> ordersList = DatabaseUtil.getOrders();
         orders.forEach(order -> System.out.println(order.getStatus()));
 
         DatabaseUtil.deleteClient(clients.get(0).getId());

@@ -1,15 +1,13 @@
 package com.werfire.rainblow.models;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "orders")
-public class Order {
+public class Orders {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -26,11 +24,10 @@ public class Order {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, targetEntity = Item.class, orphanRemoval = true)
-    @Cascade(value = {CascadeType.DELETE})
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", fetch = FetchType.LAZY, targetEntity = Item.class, orphanRemoval = true)
     private Set<Item> items = new HashSet<>();
 
-    public Order() { }
+    public Orders() { }
 
     public UUID getId() {
         return id;

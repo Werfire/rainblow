@@ -51,7 +51,7 @@
         <c:otherwise>
             <div class="equipment-grid" style="margin-top: 60px">
                     <c:forEach items="${equipments}" var="equipment">
-                        <form:form method="POST" action="addToCart">
+                        <form:form method="POST" action="equipment_store">
                         <div class="equipment-element">
                             <span>
                                 ${equipment.name}<br>

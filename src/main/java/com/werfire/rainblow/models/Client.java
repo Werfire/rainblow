@@ -1,7 +1,5 @@
 package com.werfire.rainblow.models;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -24,9 +22,8 @@ public class Client {
     private String phoneNumber;
     private String address;
 
-    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER, targetEntity = Order.class, orphanRemoval = true)
-    @Cascade(value = {CascadeType.DELETE})
-    Set<Order> orders = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client", fetch = FetchType.LAZY, targetEntity = Orders.class, orphanRemoval = true)
+    Set<Orders> orders = new HashSet<>();
 
     public Client() { }
 
@@ -70,11 +67,11 @@ public class Client {
         this.address = address;
     }
 
-    public Set<Order> getOrders() {
+    public Set<Orders> getOrders() {
         return orders;
     }
 
-    public void setOrders(Set<Order> orders) {
+    public void setOrders(Set<Orders> orders) {
         this.orders = orders;
     }
 }

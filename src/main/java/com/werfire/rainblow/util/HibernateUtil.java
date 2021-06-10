@@ -35,7 +35,7 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(User.class);
                 configuration.addAnnotatedClass(Client.class);
                 configuration.addAnnotatedClass(Admin.class);
-                configuration.addAnnotatedClass(Order.class);
+                configuration.addAnnotatedClass(Orders.class);
                 configuration.addAnnotatedClass(Item.class);
                 configuration.addAnnotatedClass(Equipment.class);
                 configuration.addAnnotatedClass(SiteReservation.class);

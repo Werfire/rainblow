@@ -2,7 +2,7 @@ package com.werfire.rainblow.controllers;
 
 import com.werfire.rainblow.models.Equipment;
 import com.werfire.rainblow.models.Item;
-import com.werfire.rainblow.models.Order;
+import com.werfire.rainblow.models.Orders;
 import com.werfire.rainblow.models.User;
 import com.werfire.rainblow.util.DatabaseUtil;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -26,11 +26,11 @@ public class MainController {
     }
 
     @ModelAttribute("cart")
-    public Order initShoppingCart() {
+    public Orders initShoppingCart() {
         return null;
     }
 
-    @RequestMapping({"/", "/index", "equipment_store"})
+    @RequestMapping(value = {"/", "/index", "equipment_store"}, method = RequestMethod.GET)
     public String index(Model model) {
         logger.debug("Welcome to RainBlow!");
         List<Equipment> equipmentList = DatabaseUtil.getEquipments();
@@ -49,9 +49,10 @@ public class MainController {
         if(user == null)
             return "login";
         model.addAttribute("user", user);
-        //Order cart = DatabaseUtil.findCart(user.getId());
-        //if(cart != null)
-        //    model.addAttribute("cart", cart);
+        DatabaseUtil.getClients();
+        Orders cart = DatabaseUtil.getCart(user.getId());
+        if(cart != null)
+            model.addAttribute("cart", cart);
         return "redirect:equipment_store";
     }
 
@@ -60,9 +61,9 @@ public class MainController {
         return "register";
     }
 
-    @RequestMapping(value = {"addToCart"}, method = RequestMethod.POST, params="addToCart")
+    @RequestMapping(value = {"equipment_store"}, method = RequestMethod.POST, params="addToCart")
     public String addToCart(Model model, @RequestParam int quantity, @RequestParam Equipment equipment,
-                            @ModelAttribute("user") User user, @ModelAttribute("cart") Order cart) {
+                            @ModelAttribute("user") User user, @ModelAttribute("cart") Orders cart) {
         if(user == null || DatabaseUtil.getClient(user.getId()) == null)
             return "login";
         Item item = new Item();
