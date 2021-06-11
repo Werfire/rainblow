@@ -11,6 +11,33 @@ import java.util.*;
 public class DatabaseUtil {
     private static final Logger logger = LoggerFactory.getLogger(DatabaseUtil.class);
 
+    /* CREATE METHODS */
+
+    public static void addClient(Client client) {
+
+    }
+
+    public static void addItem(Item item) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            List<Item> items = session.createQuery("from Item where equipmentId = :equipment_id", Item.class).
+                    setParameter("equipment_id", item.getEquipmentId()).getResultList();
+            if (!items.isEmpty()) {
+                Transaction transaction = session.beginTransaction();
+                Item itemToUpdate = items.get(0);
+                itemToUpdate.setQuantity(itemToUpdate.getQuantity() + item.getQuantity());
+                session.update(itemToUpdate);
+                transaction.commit();
+            }
+            else {
+                Transaction transaction = session.beginTransaction();
+                session.save(item);
+                transaction.commit();
+            }
+        }
+    }
+
+    /* READ METHODS */
+
     public static List<User> getUsers() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("from User", User.class).getResultList();
@@ -54,22 +81,6 @@ public class DatabaseUtil {
                 return result.get(0);
             else
                 return null;
-        }
-    }
-
-    public static void addItem(Item item) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Transaction transaction = session.beginTransaction();
-            session.save(item);
-            transaction.commit();
-        }
-    }
-
-    public static void deleteClient(UUID id) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-                Transaction transaction = session.beginTransaction();
-                session.delete(session.get(Client.class, id));
-                transaction.commit();
         }
     }
 
@@ -117,6 +128,30 @@ public class DatabaseUtil {
                 allOrders.addAll(orders);
             });
             return allOrders;
+        }
+    }
+
+    /* UPDATE METHODS */
+
+    public static void subtractEquipmentQuantity(UUID id, int quantity) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            List<Equipment> equipments = session.createQuery("from Equipment where id = :id", Equipment.class).
+                    setParameter("id", id).getResultList();
+            Equipment equipToUpdate = equipments.get(0);
+            equipToUpdate.setQuantity(equipToUpdate.getQuantity() - quantity);
+            Transaction transaction = session.beginTransaction();
+            session.update(equipToUpdate);
+            transaction.commit();
+        }
+    }
+
+    /* DELETE METHODS*/
+
+    public static void deleteClient(UUID id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.delete(session.get(Client.class, id));
+            transaction.commit();
         }
     }
 }

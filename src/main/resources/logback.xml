@@ -11,10 +11,10 @@
         </layout>
     </appender>
 
-    <!--<logger name="com.werfire.rainblow" level="debug"
+    <logger name="com.werfire.rainblow" level="debug"
             additivity="false">
         <appender-ref ref="STDOUT"/>
-    </logger>-->
+    </logger>
     <logger name="org.hibernate.sql">
         <level value="info"/>
     </logger>

@@ -13,10 +13,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
 @Controller
+@SessionAttributes({"user", "cart"})
 public class MainController {
     private final Logger logger = LoggerFactory.getLogger(MainController.class);
 
@@ -30,7 +32,7 @@ public class MainController {
         return null;
     }
 
-    @RequestMapping(value = {"/", "/index", "equipment_store"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"", "index", "equipment_store"}, method = RequestMethod.GET)
     public String index(Model model) {
         logger.debug("Welcome to RainBlow!");
         List<Equipment> equipmentList = DatabaseUtil.getEquipments();
@@ -38,12 +40,12 @@ public class MainController {
         return "equipment_store";
     }
 
-    @RequestMapping({"/login"})
+    @RequestMapping("login")
     public String login(Model model) {
         return "login";
     }
 
-    @RequestMapping(value="/login", method= RequestMethod.POST, params="tryLogin")
+    @RequestMapping(value="login", method = RequestMethod.POST)
     public String tryLogin(Model model, @RequestParam String login, @RequestParam String password) {
         User user = DatabaseUtil.getUser(login, DigestUtils.sha1Hex(password));
         if(user == null)
@@ -56,36 +58,38 @@ public class MainController {
         return "redirect:equipment_store";
     }
 
-    @RequestMapping({"/register"})
+    @RequestMapping({"register"})
     public String register(Model model) {
         return "register";
     }
 
-    @RequestMapping(value = {"equipment_store"}, method = RequestMethod.POST, params="addToCart")
-    public String addToCart(Model model, @RequestParam int quantity, @RequestParam Equipment equipment,
+    @RequestMapping(value = "addToCart", method = RequestMethod.POST)
+    public String addToCart(Model model, @RequestParam int quantity, @RequestParam UUID equipmentId,
                             @ModelAttribute("user") User user, @ModelAttribute("cart") Orders cart) {
         if(user == null || DatabaseUtil.getClient(user.getId()) == null)
-            return "login";
+            return "redirect:login";
+        // TODO: create cart if null
         Item item = new Item();
         item.setId(UUID.randomUUID());
         item.setQuantity(quantity);
         item.setOrder(cart);
-        item.setEquipmentId(equipment.getId());
+        item.setEquipmentId(equipmentId);
         DatabaseUtil.addItem(item);
-        return "equipment_store";
+        DatabaseUtil.subtractEquipmentQuantity(equipmentId, quantity);
+        return "redirect:equipment_store";
     }
 
-    @RequestMapping({"/shopping_cart"})
+    @RequestMapping("shopping_cart")
     public String shoppingCart(Model model) {
         return "shopping_cart";
     }
 
-    @RequestMapping({"/site_reservation"})
+    @RequestMapping("site_reservation")
     public String siteReservation(Model model) {
         return "site_reservation";
     }
 
-    @RequestMapping({"/errors"})
+    @RequestMapping("errors")
     public String errorPage(HttpServletRequest httpRequest, Model model) {
         model.addAttribute("errCode", getErrorCode(httpRequest));
         return "error";

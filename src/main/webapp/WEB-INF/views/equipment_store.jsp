@@ -51,7 +51,7 @@
         <c:otherwise>
             <div class="equipment-grid" style="margin-top: 60px">
                     <c:forEach items="${equipments}" var="equipment">
-                        <form:form method="POST" action="equipment_store">
+                        <form:form method="POST" action="addToCart">
                         <div class="equipment-element">
                             <span>
                                 ${equipment.name}<br>
@@ -59,7 +59,7 @@
                                 Количество:
                             </span>
                             <input type="number" id="quantity" name="quantity" value="1" min="1" max="${equipment.quantity}">
-                            <input type="hidden" id="equipment" name="equipment" value="$(equipment)">
+                            <input type="hidden" id="equipmentId" name="equipmentId" value="${equipment.id}">
                             <button type="submit" name="addToCart" style="margin: 0.5em auto;
                             display: block; background-color: palegreen">В корзину</button>
                         </div>
