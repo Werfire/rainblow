@@ -1,9 +1,6 @@
 package com.werfire.rainblow.controllers;
 
-import com.werfire.rainblow.models.Equipment;
-import com.werfire.rainblow.models.Item;
-import com.werfire.rainblow.models.Orders;
-import com.werfire.rainblow.models.User;
+import com.werfire.rainblow.models.*;
 import com.werfire.rainblow.util.DatabaseUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -13,12 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
 @Controller
-@SessionAttributes({"user", "cart"})
+@SessionAttributes({"user", "cart", "isAdmin"})
 public class MainController {
     private final Logger logger = LoggerFactory.getLogger(MainController.class);
 
@@ -32,26 +28,35 @@ public class MainController {
         return null;
     }
 
+    @ModelAttribute("isAdmin")
+    public boolean initIsAdmin() {
+        return false;
+    }
+
     @RequestMapping(value = {"", "index", "equipment_store"}, method = RequestMethod.GET)
-    public String index(Model model) {
+    public String index(Model model, @ModelAttribute("cart") Orders cart) {
         logger.debug("Welcome to RainBlow!");
         List<Equipment> equipmentList = DatabaseUtil.getEquipments();
+        //model.addAttribute("cartItems", cart == null ? 0 : cart.getItems().size());
         model.addAttribute("equipments", equipmentList);
         return "equipment_store";
     }
 
     @RequestMapping("login")
     public String login(Model model) {
+        model.addAttribute("user", null);
+        model.addAttribute("cart", null);
+        model.addAttribute("isAdmin", false);
         return "login";
     }
 
-    @RequestMapping(value="login", method = RequestMethod.POST)
+    @RequestMapping(value="tryLogin", method = RequestMethod.POST)
     public String tryLogin(Model model, @RequestParam String login, @RequestParam String password) {
         User user = DatabaseUtil.getUser(login, DigestUtils.sha1Hex(password));
         if(user == null)
-            return "login";
+            return "redirect:login";
         model.addAttribute("user", user);
-        DatabaseUtil.getClients();
+        model.addAttribute("isAdmin", DatabaseUtil.getClient(user.getId()) == null);
         Orders cart = DatabaseUtil.getCart(user.getId());
         if(cart != null)
             model.addAttribute("cart", cart);
@@ -65,16 +70,28 @@ public class MainController {
 
     @RequestMapping(value = "addToCart", method = RequestMethod.POST)
     public String addToCart(Model model, @RequestParam int quantity, @RequestParam UUID equipmentId,
-                            @ModelAttribute("user") User user, @ModelAttribute("cart") Orders cart) {
-        if(user == null || DatabaseUtil.getClient(user.getId()) == null)
+                            @ModelAttribute("user") User user, @ModelAttribute("cart") Orders cart,
+                            @ModelAttribute("isAdmin") boolean isAdmin) {
+        if(user == null || isAdmin)
             return "redirect:login";
-        // TODO: create cart if null
+
+        if(cart == null) {
+            Client client = DatabaseUtil.getClient(user.getId());
+            Orders order = new Orders();
+            order.setId(UUID.randomUUID());
+            if(client.getAddress() != null)
+                order.setDeliveryAddress(client.getAddress());
+            order.setStatus("shopping_cart");
+            order.setClient(client);
+            DatabaseUtil.addOrder(order);
+        }
+
         Item item = new Item();
         item.setId(UUID.randomUUID());
         item.setQuantity(quantity);
-        item.setOrder(cart);
+        item.setOrder_(cart);
         item.setEquipmentId(equipmentId);
-        DatabaseUtil.addItem(item);
+        DatabaseUtil.addItem(item, user.getId());
         DatabaseUtil.subtractEquipmentQuantity(equipmentId, quantity);
         return "redirect:equipment_store";
     }

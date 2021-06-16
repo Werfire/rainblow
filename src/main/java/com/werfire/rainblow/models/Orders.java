@@ -1,6 +1,5 @@
 package com.werfire.rainblow.models;
 
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -24,7 +23,7 @@ public class Orders {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order", fetch = FetchType.LAZY, targetEntity = Item.class, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "order_", fetch = FetchType.LAZY, targetEntity = Item.class, orphanRemoval = true)
     private Set<Item> items = new HashSet<>();
 
     public Orders() { }

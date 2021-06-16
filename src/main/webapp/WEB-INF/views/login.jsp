@@ -14,7 +14,7 @@
     <span style="color: #4c95ff">Rain</span
     ><span style="color: #59c169">Blow</span>
 </a>
-<form:form method="POST" action="login">
+<form:form method="POST" action="tryLogin">
     <div class="centered">
         <h1 style="text-align: center; margin-bottom: 12px">Вход</h1>
         <label for="login" style="display: block; margin-bottom: 6px">Логин</label>

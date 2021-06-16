@@ -20,9 +20,12 @@
     <span style="color: #4c95ff">Rain</span
     ><span style="color: #59c169">Blow</span>
     </a>
+    <%--<c:if test="${isAdmin}">
+        <div>Режим администратора</div>
+    </c:if>--%>
     <div class="top-right">
         <div class="cart">
-            <a href="shopping_cart">Корзина (0)</a>
+            <a href="shopping_cart">Корзина (${cartItems})</a>
         </div>
         <div class="login-register">
             <a href="login">Вход</a>

@@ -14,13 +14,17 @@ public class DatabaseUtil {
     /* CREATE METHODS */
 
     public static void addClient(Client client) {
-
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(client);
+            transaction.commit();
+        }
     }
 
-    public static void addItem(Item item) {
+    public static void addItem(Item item, UUID userId) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<Item> items = session.createQuery("from Item where equipmentId = :equipment_id", Item.class).
-                    setParameter("equipment_id", item.getEquipmentId()).getResultList();
+            List<Item> items = session.createQuery("from Item where equipmentId = :equipment_id and order_.client.id = :user_id",
+                    Item.class).setParameter("equipment_id", item.getEquipmentId()).setParameter("user_id", userId).getResultList();
             if (!items.isEmpty()) {
                 Transaction transaction = session.beginTransaction();
                 Item itemToUpdate = items.get(0);
@@ -33,6 +37,14 @@ public class DatabaseUtil {
                 session.save(item);
                 transaction.commit();
             }
+        }
+    }
+
+    public static void addOrder(Orders order) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(order);
+            transaction.commit();
         }
     }
 
